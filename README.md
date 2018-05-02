@@ -1,2 +1,5 @@
-# QuLearn
-一个技能学习的短视频APP
+# -Learn
+Data transmission. 
+Read from server and display. 
+By zhangyu. 
+2018.04.24.
