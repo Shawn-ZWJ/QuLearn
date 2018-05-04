@@ -1,102 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.viaviapp.hdvideo" >
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
+    package="com.example.lenovo.login">
 
     <application
-        android:name="com.viaviapp.hdvideo.MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <!--启动页面-->
-        <activity
-            android:name="com.viaviapp.hdvideo.SplashActivity"
-            android:label="@string/app_name" >
-
-        </activity>
-        <activity
-            android:name="com.viaviapp.hdvideo.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.viaviapp.hdvideo.CategoryItem"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
-        </activity>
-        <activity
-            android:name="com.viaviapp.hdvideo.DetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
-        </activity>
-        <activity
-            android:name="com.viaviapp.hdvideo.AboutUsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
-        </activity>
-        <activity
-            android:name="com.viaviapp.hdvideo.Privacy_Activity"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
-        </activity>
-        <activity
-            android:name="com.example.play.OpenYouTubePlayerActivity"
-            android:configChanges="orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Black" >
-        </activity>
-        <meta-data android:value="583bdd5cf29d9876a8000b09" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
-        <!-- youtube play activity -->
-        <activity
-            android:name="com.example.youtube.YoutubePlay"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
-        </activity>
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <!-- Activity required to show ad overlays. -->
-        <activity
-            android:name="com.google.android.gms.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-
-        <!-- analytic -->
-        <receiver
-            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="com.google.android.gms.analytics.AnalyticsService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <receiver
-            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
+        <activity android:name=".registerActivity"></activity>
     </application>
 
 </manifest>
-
-

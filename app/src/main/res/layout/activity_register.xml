@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8ed9cd" >
+
+    <ScrollView
+        android:id="@+id/register_scroller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/register_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:minHeight="100dp"
+                android:minWidth="100dp"
+                android:padding="3dp"
+                android:src="@drawable/logo" />
+
+            <LinearLayout
+                android:id="@+id/register_edit_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/register_logo"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:background="#8ed9cd"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="账    号  "
+                        android:textColor="@android:color/white"
+                        android:textSize="20dp" />
+
+                    <EditText
+                        android:id="@+id/register_input_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:background="#fffbfbfb"
+                        android:text="  请输入手机号"
+                        android:textColor="#CCCCCC"
+                        android:singleLine="true" />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="密    码  "
+                        android:textColor="@android:color/white"
+                        android:textSize="20dp" />
+
+                    <EditText
+                        android:id="@+id/register_input_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:background="#fffbfbfb"
+                        android:text="  请输入密码"
+                        android:textColor="#CCCCCC"
+                        android:singleLine="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="确    认  "
+                        android:textColor="@android:color/white"
+                        android:textSize="20dp" />
+
+                    <EditText
+                        android:id="@+id/register_repeat_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:background="#fffbfbfb"
+                        android:text="  请再次输入密码"
+                        android:textColor="#CCCCCC"
+                        android:singleLine="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="验证码 "
+                        android:textColor="@android:color/white"
+                        android:textSize="20dp" />
+
+                    <EditText
+                        android:id="@+id/register_identify"
+                        android:layout_width="203dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:background="#fffbfbfb"
+                        android:singleLine="true"
+                        android:text="  请输入验证码"
+                        android:textColor="#CCCCCC" />
+
+                    <Button
+                        android:layout_width="67dp"
+                        android:layout_height="25dp"
+                        android:background="#1c9884"
+                        android:text="发送 "
+                        android:textColor="@android:color/white"
+                        android:textSize="17dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/register_btn"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_below="@+id/register_edit_layout"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginTop="13dp"
+                android:background="#1c9884"
+                android:text="注  册"
+                android:textColor="@android:color/white"
+                android:textSize="30dp" />
+
+            <RelativeLayout
+                android:id="@+id/register_login"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_below="@+id/register_btn"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="13dp"
+                android:gravity="center_vertical" >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="已有账号，登录"
+                    android:textColor="#1c9884"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

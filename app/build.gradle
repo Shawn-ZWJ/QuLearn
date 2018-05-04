@@ -1,21 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "25.0.2"
-    useLibrary 'org.apache.http.legacy'
+    compileSdkVersion 26
     defaultConfig {
-        applicationId 'com.ningmengsp'
-
-        manifestPlaceholders = [onesignal_app_id               : "c0f7f341-3faa-4972-ab8f-e048ee08af2f",
-                                // Project number pulled from dashboard, local value is ignored.
-                                onesignal_google_project_number: "REMOTE"]
-
-        minSdkVersion 16
-        targetSdkVersion 20
+        applicationId "com.example.lenovo.login"
+        minSdkVersion 15
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -23,24 +16,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors {
-    }
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.3.0'
-    compile 'com.google.android.gms:play-services:9.0.0'
-    compile 'com.android.support:cardview-v7:23.3.+'
-    compile 'it.neokree:MaterialTabs:0.11'
-    compile files('libs/YouTubeAndroidPlayerApi.jar')
-    compile files('libs/picasso-2.4.0.jar')
-    compile 'de.hdodenhof:circleimageview:1.3.0'
-    compile 'com.onesignal:OneSignal:3.+@aar'
-    compile 'com.android.support:multidex:1.0.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
