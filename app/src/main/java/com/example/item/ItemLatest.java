@@ -14,6 +14,8 @@ public class ItemLatest {
 	private String Type;
 	private String ViewC;
 	private String VideoNumLike;//***************
+	private String VideoStatusLike;//喜欢状态
+	private String VideoStatusDislike;//不喜欢状态
 	
 	public String getId() {
 		return id;
@@ -107,6 +109,20 @@ public class ItemLatest {
 	}
 	public void setVideoNumLike(String VideoNumLike) {
 		this.VideoNumLike = VideoNumLike;
+	}
+	//喜欢状态
+	public String getVideoStatusLike() {
+		return VideoStatusLike;
+	}
+	public void setVideoStatusLike(String VideoStatusLike) {
+		this.VideoStatusLike = VideoStatusLike;
+	}
+	//不喜欢状态
+	public String getVideoStatusDislike() {
+		return VideoStatusDislike;
+	}
+	public void setVideoStatusDislike(String VideoStatusDislike) {
+		this.VideoStatusDislike = VideoStatusDislike;
 	}
 
 

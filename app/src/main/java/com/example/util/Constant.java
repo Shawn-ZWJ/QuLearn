@@ -47,6 +47,8 @@ public class Constant implements Serializable{
 	public static final String LATEST_TYPE="video_type";
 	public static final String LATEST_VIEW="total_views";
 	public static final String LATEST_NUM_LIKE="num_like";
+	public static final String LATEST_STATUS_LIKE="false";
+	public static final String LATEST_STATUS_DISLIKE="false";
 
 	public static final String CATEGORY_ARRAY_NAME="HD_VIDEO";
 	public static final String CATEGORY_NAME="category_name";

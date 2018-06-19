@@ -81,7 +81,6 @@ import android.widget.LinearLayout.LayoutParams;
  *      startActivity(lVideoIntent);
  * </pre>
  *
- * @author David Keyes
  */
 public class OpenYouTubePlayerActivity extends Activity {
 

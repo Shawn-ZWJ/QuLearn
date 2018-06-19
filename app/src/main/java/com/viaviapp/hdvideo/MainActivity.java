@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
  	Toolbar toolbar;
 	LinearLayout lay_dev;
 	ArrayList<ItemAbout> mListItem;
- 	TextView txt_hader,textView_latest,textView_cat,textView_fav,textView_home,textView_share,textView_rate,textView_more,textView_about,textView_privacy, textView_developedby;
+ 	TextView txt_hader,textView_latest,textView_cat,textView_fav,textView_home,textView_share,textView_more,textView_about,textView_privacy, textView_developedby;
 	LinearLayout ll_latest,ll_cat,ll_fav,ll_home;
 
 	@Override
@@ -100,7 +100,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 		textView_latest = (TextView)findViewById(R.id.textView_latest);
 		textView_cat = (TextView)findViewById(R.id.textView_cat);
 		textView_fav= (TextView)findViewById(R.id.textView_fav);
-		textView_rate = (TextView)findViewById(R.id.textView_rate);
 		textView_more = (TextView)findViewById(R.id.textView_more);
 		textView_about = (TextView)findViewById(R.id.textView_ab);
 		textView_privacy = (TextView)findViewById(R.id.textView_priv);
@@ -118,7 +117,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 		textView_latest.setOnClickListener(this);
 		textView_cat.setOnClickListener(this);
 		textView_fav.setOnClickListener(this);
-		textView_rate.setOnClickListener(this);
 		textView_more.setOnClickListener(this);
 		textView_about.setOnClickListener(this);
 		textView_privacy.setOnClickListener(this);
@@ -128,13 +126,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 		Typeface tf = Typeface.createFromAsset(this.getAssets(),"Roboto-Regular.ttf");
 		txt_hader.setTypeface(tf);
 		//******初始显示************************************************************************************************************
-		/*HomeFragment f1 = new HomeFragment();
+		HomeFragment f1 = new HomeFragment();
 		loadFrag(f1,getString(R.string.menu_home),fragmentManager);
-		toolbar.setTitle(getString(R.string.menu_home));*/
-
+		toolbar.setTitle(getString(R.string.menu_home));
+/*
 		LatestFragment f1 = new LatestFragment();
 		loadFrag(f1,getString(R.string.menu_latest),fragmentManager);
-		toolbar.setTitle(getString(R.string.menu_latest));
+		toolbar.setTitle(getString(R.string.menu_latest));*/
 	}
 
 	public void loadFrag(Fragment f1, String name, FragmentManager fm) {
@@ -160,11 +158,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 		int id = v.getId();
 
 		if (id == R.id.textView_home) {
-/*			HomeFragment f1 = new HomeFragment();
+			HomeFragment f1 = new HomeFragment();
 			loadFrag(f1,getString(R.string.menu_home),fragmentManager);
 			toolbar.setTitle(getString(R.string.menu_home));
 
-			changeNavItemBG(getString(R.string.menu_home));*/
+			changeNavItemBG(getString(R.string.menu_home));
 
 		} else if (id == R.id.textView_latest) {
 			LatestFragment f1 = new LatestFragment();
@@ -174,51 +172,39 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 			changeNavItemBG(getString(R.string.menu_latest));
 
 		} else if (id == R.id.textView_cat) {
-			/*AllVideosFragment f1 = new AllVideosFragment();
+			AllVideosFragment f1 = new AllVideosFragment();
 			loadFrag(f1,getString(R.string.menu_category),fragmentManager);
 			toolbar.setTitle(getString(R.string.menu_category));
 
-			changeNavItemBG(getString(R.string.menu_category));*/
+			changeNavItemBG(getString(R.string.menu_category));
 
 		} else if(id == R.id.textView_fav) {
-			/*FavoriteFragment f1 = new FavoriteFragment();
+			FavoriteFragment f1 = new FavoriteFragment();
 			loadFrag(f1,getString(R.string.menu_favorite),fragmentManager);
 			toolbar.setTitle(getString(R.string.menu_favorite));
 
-			changeNavItemBG(getString(R.string.menu_favorite));*/
+			changeNavItemBG(getString(R.string.menu_favorite));
 
 		}
 		else if(id == R.id.textView_ab) {
-			/*Intent intent = new Intent(MainActivity.this,AboutUsActivity.class);
-			startActivity(intent);*/
+			Intent intent = new Intent(MainActivity.this,AboutUsActivity.class);
+			startActivity(intent);
 		}
 		else if(id == R.id.textView_share) {
-			/*Intent sendIntent = new Intent();
+			Intent sendIntent = new Intent();
 			sendIntent.setAction(Intent.ACTION_SEND);
-			sendIntent.putExtra(Intent.EXTRA_TEXT, "Download this app from this link"+"https://play.google.com/store/apps/details?id="+getPackageName());
+			//sendIntent.putExtra(Intent.EXTRA_TEXT, "Download this app from this link"+"https://play.google.com/store/apps/details?id="+getPackageName());
+			sendIntent.putExtra(Intent.EXTRA_TEXT, "快来看视频啊~趣Learn等你呦");
 			sendIntent.setType("text/plain");
-			startActivity(sendIntent);*/
+			startActivity(sendIntent);
 
-		} else if(id == R.id.textView_rate) {
-/*			final String appName = getPackageName();//your application package name i.e play store application url
-			Log.e("package:", appName);
-			try {
-				startActivity(new Intent(Intent.ACTION_VIEW,
-						Uri.parse("market://details?id="
-								+ appName)));
-			} catch (android.content.ActivityNotFoundException anfe) {
-				startActivity(new Intent(
-						Intent.ACTION_VIEW,
-						Uri.parse("http://play.google.com/store/apps/details?id="
-								+ appName)));
-			}*/
 		}
 		else if(id == R.id.textView_more) {
-			//startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(getString(R.string.play_more_apps))));
+			startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(getString(R.string.play_more_apps))));
 
 		} else if(id == R.id.textView_priv) {
-			/*Intent intentpr = new Intent(MainActivity.this,Privacy_Activity.class);
-			startActivity(intentpr);*/
+			Intent intentpr = new Intent(MainActivity.this,Privacy_Activity.class);
+			startActivity(intentpr);
 		}
 		mDrawerLayout.closeDrawer(GravityCompat.START);
 

@@ -10,6 +10,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,6 +40,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+//导入httpclient相关类
+import org.apache.http.HttpResponse;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+
+
+
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -52,12 +64,18 @@ public class DetailActivity extends AppCompatActivity {
     String video_num_like;//***点赞数量*******************
     ImageView like;
     ImageView dislike;
+    //int status_like = 0;    //喜欢的状态   1 为点赞了 0 为没有点赞
+    String videostatuslike;
+    String videostatusdislike;
+    //int status_dislike = 0;//不喜欢的状态 1 为踩了    0 为没有踩
+    private String strResult="";//http结果
 
     private Menu menu;
     public DatabaseHandler db;
     private AdView mAdView;
     int scrollRange = -1;
     boolean isShow = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +89,7 @@ public class DetailActivity extends AppCompatActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
+
         arrayOfLatestVideo=new ArrayList<>();
         final  CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(" ");
@@ -99,25 +118,40 @@ public class DetailActivity extends AppCompatActivity {
         txt_time=(TextView)findViewById(R.id.txt_time);
         web_desc=(WebView)findViewById(R.id.desweb);
         txt_view=(TextView)findViewById(R.id.txt_view);
-        text_num_like = (TextView)findViewById(R.id.text_num_like);//***点赞数量***********
-        like = (ImageView) findViewById(R.id.like);//********点赞图片按钮******
+        text_num_like = (TextView)findViewById(R.id.text_num_like);//****点赞数量***********
+        like = (ImageView) findViewById(R.id.like);//*********点赞图片按钮******
         dislike = (ImageView) findViewById(R.id.dislike);//********踩图片按钮******
 
         img_play=(ImageView)findViewById(R.id.imageView3);
         mAdView = (AdView) findViewById(R.id.adView);
         mAdView.loadAd(new AdRequest.Builder().build());
+
         if (JsonUtils.isNetworkAvailable(DetailActivity.this)) {
-            new MyTask().execute(Constant.CATEGORY_ITEM_SINGLE_URL+Constant.LATEST_IDD);
+            new MyTask().execute(Constant.CATEGORY_ITEM_SINGLE_URL+Constant.LATEST_IDD);//*******改了观看人数***********************************
         } else {
             showToast("No Network Connection!!!");
         }
+
+        /*//在新线程里发送请求并获得返回结果字符串，把值赋给strResult
+        new Thread(new RequestThread()).start();*/
 
         like.setOnClickListener( new View.OnClickListener() {
                                                   @Override
                                                   public void onClick(View v) {
                                                       // 长toast
                                                       //Toast.makeText(DetailActivity.this, "This is a long toast!", Toast.LENGTH_SHORT).show();
-                                                      like.setImageDrawable(getResources().getDrawable(R.drawable.ic_like_red_hdpi));
+                                                      if(videostatuslike.equals("true")){
+                                                          like.setImageDrawable(getResources().getDrawable(R.drawable.like_normal));
+                                                          videostatuslike="false";
+                                                          text_num_like.setText(strResult);//改喜欢数字
+                                                      }else if(videostatuslike.equals("false") && videostatusdislike.equals("false")){
+                                                          like.setImageDrawable(getResources().getDrawable(R.drawable.ic_like_red_hdpi));
+                                                          Toast.makeText(DetailActivity.this, "感谢小主的点赞!♪(･ω･)ﾉ", Toast.LENGTH_SHORT).show();
+                                                          videostatuslike="true";
+                                                          text_num_like.setText(strResult);//改喜欢数字
+                                                      }else if(videostatuslike.equals("false") && videostatusdislike.equals("true")){
+                                                          Toast.makeText(DetailActivity.this, "小主已经踩了这个视频咯!", Toast.LENGTH_SHORT).show();
+                                                      }
                                                   }
                                               }
         );
@@ -127,7 +161,17 @@ public class DetailActivity extends AppCompatActivity {
                                      public void onClick(View v) {
                                          // 长toast
                                          //Toast.makeText(DetailActivity.this, "This is a long toast!", Toast.LENGTH_SHORT).show();
-                                         like.setImageDrawable(getResources().getDrawable(R.drawable.dislike_darkgreen));
+                                         if(videostatusdislike.equals("true")){
+                                             dislike.setImageDrawable(getResources().getDrawable(R.drawable.dislike_normal));
+                                             videostatusdislike="false";
+                                         }else if(videostatusdislike.equals("false") && videostatuslike.equals("false")){
+                                             dislike.setImageDrawable(getResources().getDrawable(R.drawable.dislike_darkgreen));
+                                             Toast.makeText(DetailActivity.this, "嘤嘤嘤~宝宝会继续努力哒(╥╯^╰╥)", Toast.LENGTH_SHORT).show();
+                                             videostatusdislike="true";
+                                         }else if(videostatusdislike.equals("false") && videostatuslike.equals("true")){
+                                             Toast.makeText(DetailActivity.this, "小主已经赞了这个视频咯!", Toast.LENGTH_SHORT).show();
+                                         }
+
                                      }
                                  }
         );
@@ -136,8 +180,11 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private	class MyTask extends AsyncTask<String, Void, String> {
 
+
+
+    private	class MyTask extends AsyncTask<String, Void, String> {
+    //*****继承异步*****************************************
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -162,7 +209,7 @@ public class DetailActivity extends AppCompatActivity {
                     JSONObject mainJson = new JSONObject(result);
                     JSONArray jsonArray = mainJson.getJSONArray(Constant.LATEST_ARRAY_NAME);
                     JSONObject objJson = null;
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for (int i = 0; i < jsonArray.length() + 2; i++) {
                         objJson = jsonArray.getJSONObject(i);
 
                         ItemLatest objItem = new ItemLatest();
@@ -179,16 +226,15 @@ public class DetailActivity extends AppCompatActivity {
                         objItem.setType(objJson.getString(Constant.LATEST_TYPE));
                         objItem.setViewC(objJson.getString(Constant.LATEST_VIEW));//观看人数
                         objItem.setVideoNumLike(objJson.getString(Constant.LATEST_NUM_LIKE));//点赞数量************
+                        objItem.setVideoStatusLike(Constant.LATEST_STATUS_LIKE);//点赞状态************
+                        objItem.setVideoStatusDislike(Constant.LATEST_STATUS_DISLIKE);//踩状态************
                         arrayOfLatestVideo.add(objItem);
-
-
 
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                 setAdapterToListview();
             }
 
@@ -211,12 +257,17 @@ public class DetailActivity extends AppCompatActivity {
         videoview=objAllBean.getViewC();
 
         video_num_like=objAllBean.getVideoNumLike();//******************
+        videostatuslike=objAllBean.getVideoStatusLike();
+        videostatusdislike=objAllBean.getVideoStatusDislike();
 
         txt_title.setText(videoname);
         txt_time.setText("时间:"+ videoduration);
         txt_cat.setText("分类:"+ videocatname);
         txt_view.setText("观看:"+ videoview);
         text_num_like.setText(video_num_like);//***点赞数量*****************
+
+        //在新线程里发送请求并获得返回结果字符串，把值赋给strResult
+        new Thread(new RequestThread()).start();
 
         web_desc.setBackgroundColor(0);
         web_desc.setFocusableInTouchMode(false);
@@ -249,6 +300,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         img_play.setOnClickListener(new View.OnClickListener() {
+            //***视频播放按钮***************************
             @Override
             public void onClick(View v) {
 
@@ -268,6 +320,41 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
+    private class RequestThread implements Runnable {
+        @SuppressWarnings("unchecked")
+        public void run() {
+            //因为选择POST方法，所以new HttpPost对象，构造方法传入处理请求php文件的url
+            HttpPost httpRequest = new HttpPost("http://47.94.20.69/data.php");
+            //POST方法的参数列表
+            ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+            //添加参数，值
+            params.add(new BasicNameValuePair("numLike", video_num_like));
+            try {
+                //设置请求实体，设定了参数列表
+                httpRequest.setEntity(new UrlEncodedFormEntity(params,HTTP.UTF_8));
+                //执行请求,等待服务器返回结果
+                HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequest);
+                //log出http返回报文头
+                Log.e("status",httpResponse.getStatusLine().toString());
+                //判断返回码是否为200，200表示请求成功
+                if (httpResponse.getStatusLine().getStatusCode() == 200) {
+                    //获取返回字符串
+                    strResult = EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
 
     public void showToast(String msg) {
         Toast.makeText(DetailActivity.this, msg, Toast.LENGTH_LONG).show();
@@ -308,7 +395,8 @@ public class DetailActivity extends AppCompatActivity {
 
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Download this app from this link"+"https://play.google.com/store/apps/details?id="+getPackageName());
+                //sendIntent.putExtra(Intent.EXTRA_TEXT, "Download this app from this link"+"https://play.google.com/store/apps/details?id="+getPackageName());
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "快来看视频啊~趣Learn等你呦");
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
 

@@ -104,9 +104,6 @@ public class LatestFragment extends Fragment {
 				PopUpAds.ShowInterstitialAds(getActivity());
 				Intent intplay=new Intent(getActivity(),DetailActivity.class);
  				startActivity(intplay);
-
-
-
 			}
 		});
 
