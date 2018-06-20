@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.util.Md5Utils;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private String strResult="";//http结果
     private String username;
     private String password;
+    String jiami;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 //在新线程里发送请求并获得返回结果字符串，把值赋给strResult
                 new Thread(new RequestThread()).start();
+
+                 jiami = Md5Utils.md5Password(password);
+
 
                 if(username.equals("admin") && password.equals("admin")){
                     // 给bnt1添加点击响应事件
@@ -92,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
             ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
             //添加参数，值
             params.add(new BasicNameValuePair("username", username));
-            params.add(new BasicNameValuePair("password", password));
+            params.add(new BasicNameValuePair("password", jiami));
             try {
                 //设置请求实体，设定了参数列表
                 httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));

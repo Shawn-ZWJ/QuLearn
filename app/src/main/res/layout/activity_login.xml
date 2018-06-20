@@ -83,6 +83,7 @@
                         android:layout_marginRight="5dp"
                         android:background="#fffbfbfb"
                         android:text=""
+                        android:inputType="textPassword"
                         android:textColor="#CCCCCC"
                         android:singleLine="true" />
                 </LinearLayout>
